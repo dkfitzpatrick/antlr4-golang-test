@@ -1,18 +1,41 @@
 
 
-# Performance Tests
+# Grammars for performance testing
+
+A variety of grammars setup for testing performance of golang target for Antlr4.   Base
+structure is:
+
+   grammar_test.go
+   grammar/*.g4, build.sh, data/
+
+The test files only include Benchmark targets.   Run via:
+
+  % go test -run=None -bench=. <grammar>_test.go
 
 
-# Antlr Golang Target Fails
+As of 9/28/2021 - the following are useable:
 
-Golang target generation issues seem to be focused on relying on overloading functions.
+   c_test.go
+   verilog_test.go
+   sv2017_test.go
 
-## Java8 Grammar (fails/java8)
+The following show fails wrt to the golang generated code (primarily via function overloading
+which is not supported in golang):
+
+   java8_test.go
+   cpp14_test.go
+
+
+
+
+## Details on Antlr Golang Target Fails
+
+## Java8 Grammar (./java8)
 
 java8/java8_parser.go:20936:6: NewEmptyStatementContext redeclared in this block
 	previous declaration at parser/java8_parser.go:20275:34
 
-## CPP14 Grammar (fails/cpp14)
+## CPP14 Grammar (./cpp14)
 
 cpp14/cpp14_parser.go:8788:6: NewExpressionContext redeclared in this block
 	previous declaration at parser/cpp14_parser.go:5218:6
@@ -29,38 +52,5 @@ cpp14/cpp14parser_base_listener.go:171:57: *NewDeclaratorContext is not a type
 cpp14/cpp14parser_base_listener.go:180:59: *NewInitializerContext is not a type
 cpp14/cpp14parser_base_listener.go:183:58: *NewInitializerContext is not a type
 cpp14/cpp14parser_base_listener.go:183:58: too many errors
-
-
-the following utilities are used:
-   * github.com/rakyll/pprof-merge
-
-   % pprof-merge <file1> <file2> ....
-   % ls
-    merged.data
-
-	
-
-
-
-
-
-
-
-
-# antlr4-golang-test
-For testing antlr4 runtime performance
-
-------------
-Java8 client won't compile w/Go
-
-[dan@sfp antlr4-golang-test]$ go build main.go
-# github.com/dkfitzpatrick/antlr4-golang-test/java8
-java8/java8_parser.go:20936:6: NewEmptyStatementContext redeclared in this block
-	previous declaration at java8/java8_parser.go:20275:34
-[dan@sfp antlr4-golang-test]$ grep NewEmptyStatementContext java8/*
-java8/java8_parser.go:func NewEmptyStatementContext() *StatementContext {
-java8/java8_parser.go:func NewEmptyStatementContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *EmptyStatementContext {
-java8/java8_parser.go:	localctx = NewEmptyStatementContext(p, p.GetParserRuleContext(), p.GetState())
-
 
 
