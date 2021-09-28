@@ -5,27 +5,33 @@
 A variety of grammars setup for testing performance of golang target for Antlr4.   Base
 structure is:
 
+```text
    grammar_test.go
    grammar/*.g4, build.sh, data/
+```
 
 The test files only include Benchmark targets.   Run via:
 
+```text
   % go test -run=None -bench=. <grammar>_test.go
+```
 
 
 As of 9/28/2021 - the following are useable:
 
+```text
    c_test.go
    verilog_test.go
    sv2017_test.go
+```
 
 The following show fails wrt to the golang generated code (primarily via function overloading
 which is not supported in golang):
 
+```text
    java8_test.go
    cpp14_test.go
-
-
+```
 
 
 ## Details on Antlr Golang Target Fails
